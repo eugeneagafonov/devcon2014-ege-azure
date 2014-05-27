@@ -1,5 +1,6 @@
 ﻿using System.Web.Http;
 using AzureService.Component;
+using AzureService.Configuration;
 using AzureService.Core.Configuration;
 using AzureService.Web;
 using Microsoft.Owin;
@@ -34,7 +35,8 @@ namespace AzureService.Web
 
 		private HttpConfiguration registerServices(HttpConfiguration config)
 		{
-			ConfigurationOptions options = null; //AppConfiguration.GetConfigurationOptions();
+			IApplicationConfiguration configuration = AppConfiguration.GetDummyConfiguration();
+			ConfigurationOptions options = configuration.GetApplicationConfiguration();
 
 			config.DependencyResolver = AppComposition.AssembleWebApiComponents(typeof(Startup).Assembly,
 				options);

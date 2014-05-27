@@ -1,13 +1,9 @@
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.Net;
 using System.Threading;
 using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Diagnostics;
 using Microsoft.WindowsAzure.ServiceRuntime;
-using Microsoft.WindowsAzure.Storage;
 
 namespace AzureService.Worker
 {
@@ -34,6 +30,25 @@ namespace AzureService.Worker
 			// see the MSDN topic at http://go.microsoft.com/fwlink/?LinkId=166357.
 
 			return base.OnStart();
+		}
+
+		private static string getRoleSetting(string name)
+		{
+			return getRoleSetting(name, string.Empty);
+		}
+
+		private static string getRoleSetting(string name, string defaultValue)
+		{
+			try
+			{
+				return CloudConfigurationManager.GetSetting(name) ?? defaultValue;
+			}
+			catch (Exception e)
+			{
+				Trace.TraceError("No setting '{0}' in worker role configuration.", name);
+				Trace.TraceError(e.ToString());
+				return defaultValue;
+			}
 		}
 	}
 }

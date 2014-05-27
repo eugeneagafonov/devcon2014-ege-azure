@@ -108,6 +108,10 @@
       <Project>{F50A8184-3CE3-4584-97E6-123CCA0C052D}</Project>
       <Name>AzureService.Component</Name>
     </ProjectReference>
+    <ProjectReference Include="..\AzureService.Configuration\AzureService.Configuration.csproj">
+      <Project>{5EFF39E0-2934-446D-B98D-D64C8537AF76}</Project>
+      <Name>AzureService.Configuration</Name>
+    </ProjectReference>
     <ProjectReference Include="..\AzureService.Core\AzureService.Core.csproj">
       <Project>{AC96BCA8-422D-41F9-A755-F259B87F965D}</Project>
       <Name>AzureService.Core</Name>

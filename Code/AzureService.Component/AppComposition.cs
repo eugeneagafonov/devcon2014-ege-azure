@@ -38,7 +38,7 @@ namespace AzureService.Component
 			//		new NamedParameter("storageConnectionString", options.StorageConnectionString),
 			//		new NamedParameter("containerName", options.BlobContainerName),
 			//		new NamedParameter("pdfContainerName", options.BlobContainerNamePdf),
-			//		new NamedParameter("conversionTaskTableName", options.ConversionTaskTableName)
+			//		new NamedParameter("conversionTaskTableName", options.ProcessingTaskTableName)
 			//	})
 			//	.As<IStorageService>();
 
@@ -46,7 +46,7 @@ namespace AzureService.Component
 			//	.WithParameters(new Parameter[]
 			//	{
 			//		new NamedParameter("storageConnectionString", options.StorageConnectionString),
-			//		new NamedParameter("conversionQueueName", options.ConversionQueueName)
+			//		new NamedParameter("conversionQueueName", options.ProcessingQueueName)
 			//	})
 			//	.As<IQueueService>();
 

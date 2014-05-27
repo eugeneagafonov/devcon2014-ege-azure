@@ -3,13 +3,13 @@
 	public class ConfigurationOptions
 	{
 		public ConfigurationOptions(string storageConnectionString, string sourceBlobContainerName,
-			string destinationBlobContainerName, string conversionQueueName, string conversionTaskTableName)
+			string destinationBlobContainerName, string processingQueueName, string processingTaskTableName)
 		{
 			StorageConnectionString = storageConnectionString;
 			SourceSourceBlobContainerName = sourceBlobContainerName;
 			DestinationDestinationBlobContainerName = destinationBlobContainerName;
-			ConversionQueueName = conversionQueueName;
-			ConversionTaskTableName = conversionTaskTableName;
+			ProcessingQueueName = processingQueueName;
+			ProcessingTaskTableName = processingTaskTableName;
 		}
 
 		public string StorageConnectionString { get; private set; }
@@ -18,8 +18,8 @@
 
 		public string DestinationDestinationBlobContainerName { get; private set; }
 
-		public string ConversionQueueName { get; private set; }
+		public string ProcessingQueueName { get; private set; }
 
-		public string ConversionTaskTableName { get; private set; }
+		public string ProcessingTaskTableName { get; private set; }
 	}
 }
