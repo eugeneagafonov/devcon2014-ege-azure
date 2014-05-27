@@ -17,7 +17,7 @@ namespace AzureService.Configuration
 		{
 			_redisConnectionString = redisConnectionString;
 		}
-		public async Task<ConfigurationOptions> GetApplicationConfiguration()
+		public async Task<ConfigurationOptions> GetApplicationConfigurationAsync()
 		{
 			using (ConnectionMultiplexer connection = ConnectionMultiplexer.Connect(_redisConnectionString))
 			{

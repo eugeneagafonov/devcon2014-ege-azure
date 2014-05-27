@@ -5,7 +5,7 @@ namespace AzureService.Configuration
 {
 	public class DummyAppConfiguration : IApplicationConfiguration
 	{
-		public async Task<ConfigurationOptions> GetApplicationConfiguration()
+		public async Task<ConfigurationOptions> GetApplicationConfigurationAsync()
 		{
 			return new ConfigurationOptions(
 				storageConnectionString:	"UseDevelopmentStorage=true;",
