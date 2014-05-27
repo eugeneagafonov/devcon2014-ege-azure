@@ -68,17 +68,20 @@
     <Compile Include="Configuration\ConfigurationOptions.cs" />
     <Compile Include="Configuration\IApplicationConfiguration.cs" />
     <Compile Include="Entity\FileMetadata.cs" />
+    <Compile Include="Entity\ProcessingTask.cs" />
+    <Compile Include="Entity\ProcessingTaskQueueMessage.cs" />
+    <Compile Include="Entity\TaskStatus.cs" />
     <Compile Include="Extension\GuidExtensions.cs" />
     <Compile Include="FileStorageService\AzureFileStorageService.cs" />
     <Compile Include="FileStorageService\IFileStorageService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="QueueService\AzureQueueService.cs" />
+    <Compile Include="QueueService\IQueueService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="QueueService\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

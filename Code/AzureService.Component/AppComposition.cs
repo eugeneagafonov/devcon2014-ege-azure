@@ -11,6 +11,7 @@ using Autofac.Integration.WebApi;
 using AzureService.Configuration;
 using AzureService.Core.Configuration;
 using AzureService.Core.FileStorageService;
+using AzureService.Core.QueueService;
 
 namespace AzureService.Component
 {
@@ -37,6 +38,9 @@ namespace AzureService.Component
 
 			builder.RegisterType<AzureFileStorageService>()
 				.As<IFileStorageService>();
+
+			builder.RegisterType<AzureQueueService>()
+				.As<IQueueService>();
 
 			//builder.RegisterType<AzureQueueService>()
 			//	.WithParameters(new Parameter[]
