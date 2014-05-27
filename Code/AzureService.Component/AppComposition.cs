@@ -8,6 +8,7 @@ using System.Web.Http.Dependencies;
 using Autofac;
 using Autofac.Core;
 using Autofac.Integration.WebApi;
+using AzureService.Configuration;
 using AzureService.Core.Configuration;
 
 namespace AzureService.Component
@@ -15,19 +16,23 @@ namespace AzureService.Component
 	public static class AppComposition
 	{
 		public static IDependencyResolver AssembleWebApiComponents(Assembly webApiAssembly,
-	ConfigurationOptions options)
+	string configurationConnectionString)
 		{
-			ContainerBuilder builder = createBuilderAndRegisterServices(options);
+			ContainerBuilder builder = createBuilderAndRegisterServices(configurationConnectionString);
 
 			builder.RegisterApiControllers(webApiAssembly);
 			IContainer container = builder.Build();
 			return new AutofacWebApiDependencyResolver(container);
 		}
 
-		private static ContainerBuilder createBuilderAndRegisterServices(ConfigurationOptions options)
+		private static ContainerBuilder createBuilderAndRegisterServices(string configurationConnectionString)
 		{
 			// конфигурирую autofac IoC контейнер
 			var builder = new ContainerBuilder();
+
+			builder.RegisterType<RedisApplicationConfiguration>()
+				.WithParameter("redisConnectionString", configurationConnectionString)
+				.As<IApplicationConfiguration>();
 
 			//// в качестве реализации IStorageService нужно брать AzureStorageService
 			//builder.RegisterType<AzureStorageService>()

@@ -1,13 +1,18 @@
-﻿using AzureService.Core.Configuration;
+﻿using System.Threading.Tasks;
+using AzureService.Core.Configuration;
 
 namespace AzureService.Configuration
 {
-	internal class DummyAppConfiguration : IApplicationConfiguration
+	public class DummyAppConfiguration : IApplicationConfiguration
 	{
-		public ConfigurationOptions GetApplicationConfiguration()
+		public async Task<ConfigurationOptions> GetApplicationConfiguration()
 		{
-			return new ConfigurationOptions("UseDevelopmentStorage=true;", "sourceFiles", "destinationFiles", "processing",
-				"processing"
+			return new ConfigurationOptions(
+				storageConnectionString:	"UseDevelopmentStorage=true;",
+				sourceBlobContainerName: "sourceFiles", 
+				destinationBlobContainerName: "destinationFiles",
+				processingQueueName: "processing",
+				processingTaskTableName:	"processing"
 				);
 		}
 	}

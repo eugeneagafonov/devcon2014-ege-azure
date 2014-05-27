@@ -1,7 +1,9 @@
-﻿namespace AzureService.Core.Configuration
+﻿using System.Threading.Tasks;
+
+namespace AzureService.Core.Configuration
 {
 	public interface IApplicationConfiguration
 	{
-		ConfigurationOptions GetApplicationConfiguration();
+		Task<ConfigurationOptions> GetApplicationConfiguration();
 	}
 }

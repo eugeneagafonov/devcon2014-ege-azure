@@ -1,4 +1,5 @@
-﻿using System.Web.Http;
+﻿using System.Configuration;
+using System.Web.Http;
 using AzureService.Component;
 using AzureService.Configuration;
 using AzureService.Core.Configuration;
@@ -35,11 +36,10 @@ namespace AzureService.Web
 
 		private HttpConfiguration registerServices(HttpConfiguration config)
 		{
-			IApplicationConfiguration configuration = AppConfiguration.GetDummyConfiguration();
-			ConfigurationOptions options = configuration.GetApplicationConfiguration();
-
+			string configurationConnectionString = ConfigurationManager.ConnectionStrings["redis"].ConnectionString;
+			
 			config.DependencyResolver = AppComposition.AssembleWebApiComponents(typeof(Startup).Assembly,
-				options);
+				configurationConnectionString);
 
 			return config;
 		}
