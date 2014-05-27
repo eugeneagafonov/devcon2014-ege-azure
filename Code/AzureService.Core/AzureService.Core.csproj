@@ -67,16 +67,16 @@
   <ItemGroup>
     <Compile Include="Configuration\ConfigurationOptions.cs" />
     <Compile Include="Configuration\IApplicationConfiguration.cs" />
-    <Compile Include="FileStorage\AzureStorage.cs" />
+    <Compile Include="Entity\FileMetadata.cs" />
+    <Compile Include="Extension\GuidExtensions.cs" />
+    <Compile Include="FileStorage\AzureFileStorage.cs" />
     <Compile Include="FileStorage\IFileStorage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Entity\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

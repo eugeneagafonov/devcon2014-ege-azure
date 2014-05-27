@@ -6,7 +6,7 @@
 			string destinationBlobContainerName, string processingQueueName, string processingTaskTableName)
 		{
 			StorageConnectionString = storageConnectionString;
-			SourceSourceBlobContainerName = sourceBlobContainerName;
+			SourceBlobContainerName = sourceBlobContainerName;
 			DestinationBlobContainerName = destinationBlobContainerName;
 			ProcessingQueueName = processingQueueName;
 			ProcessingTaskTableName = processingTaskTableName;
@@ -14,7 +14,7 @@
 
 		public string StorageConnectionString { get; private set; }
 
-		public string SourceSourceBlobContainerName { get; private set; }
+		public string SourceBlobContainerName { get; private set; }
 
 		public string DestinationBlobContainerName { get; private set; }
 
