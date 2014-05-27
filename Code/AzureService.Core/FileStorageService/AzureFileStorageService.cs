@@ -7,13 +7,13 @@ using AzureService.Core.Extension;
 using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Blob;
 
-namespace AzureService.Core.FileStorage
+namespace AzureService.Core.FileStorageService
 {
-	public class AzureFileStorage : IFileStorage
+	public class AzureFileStorageService : IFileStorageService
 	{
 		private readonly IApplicationConfiguration _configuration;
 
-		public AzureFileStorage(IApplicationConfiguration configuration)
+		public AzureFileStorageService(IApplicationConfiguration configuration)
 		{
 			if(null == configuration) throw new ArgumentNullException("configuration");
 

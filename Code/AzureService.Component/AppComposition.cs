@@ -10,6 +10,7 @@ using Autofac.Core;
 using Autofac.Integration.WebApi;
 using AzureService.Configuration;
 using AzureService.Core.Configuration;
+using AzureService.Core.FileStorageService;
 
 namespace AzureService.Component
 {
@@ -34,18 +35,8 @@ namespace AzureService.Component
 				.WithParameter("redisConnectionString", configurationConnectionString)
 				.As<IApplicationConfiguration>();
 
-			//// в качестве реализации IStorageService нужно брать AzureStorageService
-			//builder.RegisterType<AzureStorageService>()
-			//	.WithParameters(new Parameter[]
-			//	{
-			//		// в конструктор передаем два параметра. Так сложно нужно, чтобы
-			//		// сделать контроллеры независимыми от реализации сервисов
-			//		new NamedParameter("storageConnectionString", options.StorageConnectionString),
-			//		new NamedParameter("containerName", options.BlobContainerName),
-			//		new NamedParameter("pdfContainerName", options.BlobContainerNamePdf),
-			//		new NamedParameter("conversionTaskTableName", options.ProcessingTaskTableName)
-			//	})
-			//	.As<IStorageService>();
+			builder.RegisterType<AzureFileStorageService>()
+				.As<IFileStorageService>();
 
 			//builder.RegisterType<AzureQueueService>()
 			//	.WithParameters(new Parameter[]
