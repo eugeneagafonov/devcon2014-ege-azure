@@ -1,5 +1,7 @@
 ﻿using System.Web.Http;
-using AzureService.Web.WebAPI;
+using AzureService.Component;
+using AzureService.Core.Configuration;
+using AzureService.Web;
 using Microsoft.Owin;
 using Microsoft.Owin.Cors;
 using Owin;
@@ -7,7 +9,7 @@ using Owin;
 // - будет использован при запуске OWIN приложения
 [assembly: OwinStartup(typeof(Startup))]
 
-namespace AzureService.Web.WebAPI
+namespace AzureService.Web
 {
 	public class Startup
 	{
@@ -32,10 +34,10 @@ namespace AzureService.Web.WebAPI
 
 		private HttpConfiguration registerServices(HttpConfiguration config)
 		{
-			//ConfigurationOptions options = AppConfiguration.GetConfigurationOptions();
+			ConfigurationOptions options = null; //AppConfiguration.GetConfigurationOptions();
 
-			//config.DependencyResolver = AppComposition.CreateWebApiComponents(typeof(Startup).Assembly,
-			//	options);
+			config.DependencyResolver = AppComposition.AssembleWebApiComponents(typeof(Startup).Assembly,
+				options);
 
 			return config;
 		}
