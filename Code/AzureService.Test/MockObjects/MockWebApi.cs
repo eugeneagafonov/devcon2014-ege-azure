@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -11,11 +12,13 @@ using Autofac.Integration.WebApi;
 using AzureService.Component;
 using AzureService.Configuration;
 using AzureService.Core.Configuration;
+using AzureService.Core.Entity;
 using AzureService.Core.FileProcessing;
 using AzureService.Core.FileProcessingWorker;
 using AzureService.Core.FileStorageService;
 using AzureService.Core.QueueService;
 using AzureService.Core.TaskService;
+using AzureService.Test.MockObjects.Services;
 using AzureService.Web;
 using Microsoft.Owin.Testing;
 using Owin;
@@ -28,6 +31,7 @@ namespace AzureService.Test.MockObjects
 	IReadOnlyDictionary<string, IFileProcessor> converters)
 		{
 			ContainerBuilder builder = createBuilderAndRegisterServices();
+			//ContainerBuilder builder = createBuilderAndRegisterMockServices();
 
 			foreach (var entry in converters)
 			{
@@ -65,6 +69,7 @@ namespace AzureService.Test.MockObjects
 		private static IDependencyResolver assembleWebApiComponents(Assembly webApiAssembly)
 		{
 			ContainerBuilder builder = createBuilderAndRegisterServices();
+			//ContainerBuilder builder = createBuilderAndRegisterMockServices();
 
 			builder.RegisterApiControllers(webApiAssembly);
 			IContainer container = builder.Build();
@@ -79,7 +84,6 @@ namespace AzureService.Test.MockObjects
 			builder.RegisterType<DummyAppConfiguration>()
 				.As<IApplicationConfiguration>();
 
-			// -- меняем на тестовую реализацию
 			builder.RegisterType<AzureFileStorageService>()
 				.As<IFileStorageService>();
 
@@ -87,6 +91,30 @@ namespace AzureService.Test.MockObjects
 				.As<IQueueService>();
 
 			builder.RegisterType<AzureTableTaskService>()
+				.As<ITaskService>();
+
+			builder.RegisterType<FileProcessingWorker>()
+				.As<IFileProcessingWorker>();
+
+			return builder;
+		}
+
+		private static ContainerBuilder createBuilderAndRegisterMockServices()
+		{
+			// конфигурирую autofac IoC контейнер
+			var builder = new ContainerBuilder();
+
+			builder.RegisterType<DummyAppConfiguration>()
+				.As<IApplicationConfiguration>();
+
+			// -- меняем на тестовую реализацию
+			builder.RegisterType<MockFileStorageService>()
+				.As<IFileStorageService>();
+
+			builder.RegisterType<MockQueueService>()
+				.As<IQueueService>();
+
+			builder.RegisterType<MockTaskService>()
 				.As<ITaskService>();
 			// ------------------------------------
 
@@ -96,5 +124,13 @@ namespace AzureService.Test.MockObjects
 
 			return builder;
 		}
+
+		public static Dictionary<string, ProcessingTask> Tasks = new Dictionary<string, ProcessingTask>();
+
+		public static ConcurrentQueue<ProcessingTaskQueueMessage> QueueMessages = 
+			new ConcurrentQueue<ProcessingTaskQueueMessage>();
+
+		public static Dictionary<string, FileData> SrcFiles = new Dictionary<string, FileData>();
+		public static Dictionary<string, FileData> DstFiles = new Dictionary<string, FileData>();
 	}
 }

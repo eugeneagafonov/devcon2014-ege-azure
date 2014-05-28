@@ -85,7 +85,11 @@
   </Choose>
   <ItemGroup>
     <Compile Include="ApiTests.cs" />
+    <Compile Include="FileData.cs" />
     <Compile Include="MockObjects\MockWebApi.cs" />
+    <Compile Include="MockObjects\Services\MockFileStorageService.cs" />
+    <Compile Include="MockObjects\Services\MockQueueService.cs" />
+    <Compile Include="MockObjects\Services\MockTaskService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
