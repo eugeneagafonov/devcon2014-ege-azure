@@ -77,6 +77,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="QueueService\AzureQueueService.cs" />
     <Compile Include="QueueService\IQueueService.cs" />
+    <Compile Include="TaskService\AzureTableTaskService.cs" />
+    <Compile Include="TaskService\ITaskService.cs" />
+    <Compile Include="TaskService\ProcessingTaskEntity.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
