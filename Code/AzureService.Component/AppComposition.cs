@@ -27,9 +27,12 @@ namespace AzureService.Component
 			// конфигурирую autofac IoC контейнер
 			var builder = new ContainerBuilder();
 
-			builder.RegisterType<RedisApplicationConfiguration>()
-				.WithParameter("redisConnectionString", configurationConnectionString)
+			builder.RegisterType<DummyAppConfiguration>()
 				.As<IApplicationConfiguration>();
+
+			//builder.RegisterType<RedisApplicationConfiguration>()
+			//	.WithParameter("redisConnectionString", configurationConnectionString)
+			//	.As<IApplicationConfiguration>();
 
 			builder.RegisterType<AzureFileStorageService>()
 				.As<IFileStorageService>();
