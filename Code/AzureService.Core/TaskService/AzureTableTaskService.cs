@@ -8,7 +8,7 @@ using Microsoft.WindowsAzure.Storage.Table;
 
 namespace AzureService.Core.TaskService
 {
-	public class AzureTableTaskService
+	public class AzureTableTaskService : ITaskService
 	{
 		private readonly IApplicationConfiguration _configuration;
 
@@ -52,6 +52,5 @@ namespace AzureService.Core.TaskService
 			await table.CreateIfNotExistsAsync();
 			return table;
 		}
-
 	}
 }

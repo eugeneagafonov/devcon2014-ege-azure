@@ -36,7 +36,8 @@ namespace AzureService.Web
 
 		private HttpConfiguration registerServices(HttpConfiguration config)
 		{
-			string configurationConnectionString = ConfigurationManager.ConnectionStrings["redis"].ConnectionString;
+			string configurationConnectionString = 
+				ConfigurationManager.ConnectionStrings["redisConnectionString"].ConnectionString;
 			
 			config.DependencyResolver = AppComposition.AssembleWebApiComponents(typeof(Startup).Assembly,
 				configurationConnectionString);

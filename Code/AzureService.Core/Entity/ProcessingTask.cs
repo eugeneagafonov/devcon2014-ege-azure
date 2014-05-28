@@ -8,6 +8,8 @@
 
 		public TaskStatus Status { get; set; }
 
+		public string OriginalFileName { get; set; }
+
 		public FileMetadata SourceFile { get; set; }
 
 		public FileMetadata DestinationFile { get; set; }
