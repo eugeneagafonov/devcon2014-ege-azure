@@ -100,6 +100,8 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Log\ElasticSearchTraceListener.cs" />
+    <Compile Include="Log\LogExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="WebAPI\ProcessingResultController.cs" />

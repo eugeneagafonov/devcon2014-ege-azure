@@ -1,11 +1,11 @@
 ﻿using System;
-
+using System.Diagnostics;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using AzureService.Core.TaskService;
-
+using AzureService.Web.Log;
 using TaskStatus = AzureService.Core.Entity.TaskStatus;
 
 namespace AzureService.Web.WebAPI
@@ -21,6 +21,8 @@ namespace AzureService.Web.WebAPI
 		}
 		public async Task<HttpResponseMessage> Get(string taskId)
 		{
+			Trace.TraceInformation(this.CreateLogEntry(string.Format("Checkig task id {0} status", taskId)));
+
 			var task = await _taskService.GetTaskAsync(taskId);
 			if (null == task)
 			{

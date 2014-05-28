@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
 using System.Net;
 using System.Net.Http;
@@ -7,6 +8,7 @@ using System.Web.Http;
 using AzureService.Core.Entity;
 using AzureService.Core.Extension;
 using AzureService.Core.FileStorageService;
+using AzureService.Web.Log;
 using AzureService.Core.QueueService;
 using AzureService.Core.TaskService;
 using TaskStatus = AzureService.Core.Entity.TaskStatus;
@@ -29,6 +31,8 @@ namespace AzureService.Web.WebAPI
 
 		public async Task<HttpResponseMessage> Post()
 		{
+			Trace.TraceInformation(this.CreateLogEntry("Receiving a file"));
+
 			if (!Request.Content.IsMimeMultipartContent())
 			{
 				return Request.CreateResponse(HttpStatusCode.BadRequest);

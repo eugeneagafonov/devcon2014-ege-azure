@@ -1,9 +1,11 @@
 ﻿using System.Configuration;
+using System.Diagnostics;
 using System.Web.Http;
 using AzureService.Component;
 using AzureService.Configuration;
 using AzureService.Core.Configuration;
 using AzureService.Web;
+using AzureService.Web.Log;
 using Microsoft.Owin;
 using Microsoft.Owin.Cors;
 using Owin;
@@ -17,6 +19,7 @@ namespace AzureService.Web
 	{
 		public void Configuration(IAppBuilder app)
 		{
+			Trace.Listeners.Add(new ElasticSearchTraceListener());
 			app.UseCors(CorsOptions.AllowAll);
 			app.UseWebApi(createConfig());
 		}
