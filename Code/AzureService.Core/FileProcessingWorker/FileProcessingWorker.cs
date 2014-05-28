@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using Autofac.Features.Indexed;
@@ -11,6 +12,8 @@ using AzureService.Core.FileProcessing;
 using AzureService.Core.FileStorageService;
 using AzureService.Core.QueueService;
 using AzureService.Core.TaskService;
+using Newtonsoft.Json;
+using TaskStatus = AzureService.Core.Entity.TaskStatus;
 
 namespace AzureService.Core.FileProcessingWorker
 {
@@ -46,14 +49,25 @@ namespace AzureService.Core.FileProcessingWorker
 			IFileProcessor fileProcessor = _fileProcessors[task.Operation];
 			if (null == fileProcessor) return;
 
+			Trace.TraceInformation("Обрабатываем задание {0}", JsonConvert.SerializeObject(msg.Task));
+
 			var sourceStream = await _fileStorageService.GetSourceFileStreamAsync(task.SourceFile.BlobFileName);
 			var destinationStream = new MemoryStream((int)sourceStream.Length); // плохо, но не хочется делать файлы
 			await fileProcessor.ProcessFileAsync(sourceStream, destinationStream);
 			destinationStream.Seek(0, SeekOrigin.Begin);
+			var destinationFile = await _fileStorageService.SaveDestinationFileStreamAsync(destinationStream, task.SourceFile.MimeContentType);
+			destinationStream.Close();
 
-			await _fileStorageService.SaveDestinationFileStreamAsync(destinationStream, task.SourceFile.MimeContentType);
+			task.DestinationFile = destinationFile;
+			task.Status = TaskStatus.Success;
+
+			await _taskService.SaveTaskAsync(task);
 
 			await _queueService.DeleteConversionTaskAsync(msg.Id, msg.PopReceipt);
+
+
+
+			Trace.TraceInformation("Задание  обработано успешно");
 		}
 	}
 }

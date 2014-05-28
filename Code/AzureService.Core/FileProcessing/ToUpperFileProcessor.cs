@@ -20,6 +20,7 @@ namespace AzureService.Core.FileProcessing
 					string line = await reader.ReadLineAsync();
 					await writer.WriteLineAsync(line.ToUpper());
 				}
+				await writer.FlushAsync();
 			}
 		}
 	}

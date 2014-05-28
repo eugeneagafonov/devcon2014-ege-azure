@@ -19,20 +19,27 @@ namespace AzureService.Configuration
 		}
 		public async Task<ConfigurationOptions> GetApplicationConfigurationAsync()
 		{
-			using (ConnectionMultiplexer connection = ConnectionMultiplexer.Connect(_redisConnectionString))
+			try
 			{
-				IDatabase cache = connection.GetDatabase();
-				string config = await cache.StringGetAsync("configuration");
-
-				if (null == config)
+				using (ConnectionMultiplexer connection = ConnectionMultiplexer.Connect(_redisConnectionString))
 				{
-					var options = await getDefaultConfigurationOptionsAsync();
-					string optionsString = JsonConvert.SerializeObject(options);
-					await cache.StringSetAsync("configuration", optionsString);
-					return options;
-				}
+					IDatabase cache = connection.GetDatabase();
+					string config = await cache.StringGetAsync("configuration");
 
-				return JsonConvert.DeserializeObject<ConfigurationOptions>(config);
+					if (null == config)
+					{
+						var options = await getDefaultConfigurationOptionsAsync();
+						string optionsString = JsonConvert.SerializeObject(options);
+						await cache.StringSetAsync("configuration", optionsString);
+						return options;
+					}
+
+					return JsonConvert.DeserializeObject<ConfigurationOptions>(config);
+				}
+			}
+			catch
+			{
+				return getDefaultConfigurationOptionsAsync().GetAwaiter().GetResult();
 			}
 		}
 		private async Task<ConfigurationOptions> getDefaultConfigurationOptionsAsync()
