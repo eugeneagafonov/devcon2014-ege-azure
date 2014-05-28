@@ -10,6 +10,10 @@
 
 		public string OriginalFileName { get; set; }
 
+		public string Operation { get; set; }
+
+		public string Message { get; set; }
+
 		public FileMetadata SourceFile { get; set; }
 
 		public FileMetadata DestinationFile { get; set; }

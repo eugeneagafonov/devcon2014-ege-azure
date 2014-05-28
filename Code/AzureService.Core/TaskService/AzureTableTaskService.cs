@@ -38,7 +38,8 @@ namespace AzureService.Core.TaskService
 
 			// добавить информацию о пользователе
 			var entity = table.CreateQuery<ProcessingTaskEntity>()
-				.SingleOrDefault(t => t.RowKey == taskId);
+				.Where(t => t.RowKey == taskId)
+				.SingleOrDefault();
 
 			return null == entity ? null : entity.ToProcessingTask();
 		}

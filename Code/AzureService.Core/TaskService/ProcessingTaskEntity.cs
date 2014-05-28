@@ -31,6 +31,6 @@ namespace AzureService.Core.TaskService
 			return JsonConvert.DeserializeObject<ProcessingTask>(TaskString);
 		}
 
-		public string TaskString { get; private set; }
+		public string TaskString { get; set; }
 	}
 }
