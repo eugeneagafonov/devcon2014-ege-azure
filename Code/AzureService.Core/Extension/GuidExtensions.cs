@@ -18,6 +18,6 @@ namespace AzureService.Core.Extension
 			encoded = encoded.Replace("-", "+");
 			byte[] buffer = Convert.FromBase64String(encoded + "==");
 			return new Guid(buffer);
-		} 
+		}
 	}
 }

@@ -22,7 +22,7 @@ namespace AzureService.Core.QueueService
 		public async Task<ProcessingTaskQueueMessage> EnqueueConversionTaskAsync(ProcessingTask task)
 		{
 			ConfigurationOptions options = await _configuration.GetApplicationConfigurationAsync();
-			var queue = await getQueueReferenceAsync(options);
+			CloudQueue queue = await getQueueReferenceAsync(options);
 
 			string message = JsonConvert.SerializeObject(task);
 			var msg = new CloudQueueMessage(message);
@@ -35,13 +35,13 @@ namespace AzureService.Core.QueueService
 		public async Task<ProcessingTaskQueueMessage> DequeueConversionTaskAsync()
 		{
 			ConfigurationOptions options = await _configuration.GetApplicationConfigurationAsync();
-			var queue = await getQueueReferenceAsync(options);
+			CloudQueue queue = await getQueueReferenceAsync(options);
 
-			var msg = await queue.GetMessageAsync();
+			CloudQueueMessage msg = await queue.GetMessageAsync();
 			if (null == msg) return null;
 
 			var task = JsonConvert.DeserializeObject<ProcessingTask>(msg.AsString);
-			var result = new ProcessingTaskQueueMessage {Id = msg.Id, PopReceipt = msg.PopReceipt, Task = task}; 
+			var result = new ProcessingTaskQueueMessage {Id = msg.Id, PopReceipt = msg.PopReceipt, Task = task};
 
 			return result;
 		}
@@ -49,13 +49,13 @@ namespace AzureService.Core.QueueService
 		public async Task DeleteConversionTaskAsync(string id, string popReceipt)
 		{
 			ConfigurationOptions options = await _configuration.GetApplicationConfigurationAsync();
-			var queue = await getQueueReferenceAsync(options);
+			CloudQueue queue = await getQueueReferenceAsync(options);
 			await queue.DeleteMessageAsync(id, popReceipt);
 		}
 
 		private async Task<CloudQueue> getQueueReferenceAsync(ConfigurationOptions options)
 		{
-			if(null == options) throw new ArgumentNullException("options");
+			if (null == options) throw new ArgumentNullException("options");
 
 			CloudStorageAccount account = CloudStorageAccount.Parse(options.StorageConnectionString);
 			CloudQueueClient queueClient = account.CreateCloudQueueClient();

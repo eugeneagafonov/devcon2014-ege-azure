@@ -15,7 +15,7 @@ namespace AzureService.Core.FileStorageService
 
 		public AzureFileStorageService(IApplicationConfiguration configuration)
 		{
-			if(null == configuration) throw new ArgumentNullException("configuration");
+			if (null == configuration) throw new ArgumentNullException("configuration");
 
 			_configuration = configuration;
 		}
@@ -49,11 +49,11 @@ namespace AzureService.Core.FileStorageService
 		private async Task<FileMetadata> saveFileStreamAsync(
 			Stream stream, string contentType, string containerName, string connectionString)
 		{
-			var container = await getBlobContainerAsync(connectionString, containerName);
+			CloudBlobContainer container = await getBlobContainerAsync(connectionString, containerName);
 
 			string blobName = Guid.NewGuid().ToShortString();
 
-			var blob = container.GetBlockBlobReference(blobName);
+			CloudBlockBlob blob = container.GetBlockBlobReference(blobName);
 			await blob.UploadFromStreamAsync(stream);
 			blob.Properties.ContentType = contentType;
 			blob.SetProperties();
@@ -70,9 +70,9 @@ namespace AzureService.Core.FileStorageService
 
 		private async Task<Stream> getBlobStreamAsync(string fileName, string containerName, string connectionString)
 		{
-			var container = await getBlobContainerAsync(connectionString, containerName);
+			CloudBlobContainer container = await getBlobContainerAsync(connectionString, containerName);
 
-			var blob = container.GetBlockBlobReference(fileName);
+			CloudBlockBlob blob = container.GetBlockBlobReference(fileName);
 
 			if (null == blob) return null;
 

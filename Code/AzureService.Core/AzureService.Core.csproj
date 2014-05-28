@@ -72,6 +72,10 @@
     <Compile Include="Entity\ProcessingTaskQueueMessage.cs" />
     <Compile Include="Entity\TaskStatus.cs" />
     <Compile Include="Extension\GuidExtensions.cs" />
+    <Compile Include="FileProcessingWorker\FileProcessingWorker.cs" />
+    <Compile Include="FileProcessingWorker\IFileProcessingWorker.cs" />
+    <Compile Include="FileProcessing\IFileProcessor.cs" />
+    <Compile Include="FileProcessing\ToUpperFileProcessor.cs" />
     <Compile Include="FileStorageService\AzureFileStorageService.cs" />
     <Compile Include="FileStorageService\IFileStorageService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

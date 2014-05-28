@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AzureService.Core.Entity;
+﻿using AzureService.Core.Entity;
 using Microsoft.WindowsAzure.Storage.Table;
 using Newtonsoft.Json;
 
@@ -12,7 +7,7 @@ namespace AzureService.Core.TaskService
 	internal class ProcessingTaskEntity : TableEntity
 	{
 		/// <summary>
-		/// Должен быть конструктор без параметров
+		///   Должен быть конструктор без параметров
 		/// </summary>
 		public ProcessingTaskEntity()
 		{
@@ -26,11 +21,11 @@ namespace AzureService.Core.TaskService
 			TaskString = JsonConvert.SerializeObject(task);
 		}
 
+		public string TaskString { get; set; }
+
 		public ProcessingTask ToProcessingTask()
 		{
 			return JsonConvert.DeserializeObject<ProcessingTask>(TaskString);
 		}
-
-		public string TaskString { get; set; }
 	}
 }

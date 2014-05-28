@@ -1,7 +1,12 @@
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Net;
 using System.Threading;
+using System.Threading.Tasks;
+using AzureService.Component;
+using AzureService.Core.FileProcessing;
+using AzureService.Core.FileProcessingWorker;
 using Microsoft.WindowsAzure;
 using Microsoft.WindowsAzure.ServiceRuntime;
 
@@ -14,10 +19,20 @@ namespace AzureService.Worker
 			// This is a sample worker implementation. Replace with your logic.
 			Trace.TraceInformation("AzureService.Worker entry point called");
 
-			while (true)
+			var converters = new Dictionary<string, IFileProcessor>();
+			converters["ToUpper"] = new ToUpperFileProcessor();
+
+			ILifetimeAwareComponent<IFileProcessingWorker> app = AppComposition.CreateFileProcessingWorker(
+				converters,CloudConfigurationManager.GetSetting("redisConnectionString"));
+
+			using (app.LifetimeScope)
 			{
-				Thread.Sleep(10000);
-				Trace.TraceInformation("Working");
+				while (true)
+				{
+					// нельзя использовать await здесь, метод должен быть блокирующимся
+					Task.Delay(10000).GetAwaiter().GetResult();
+					app.Service.DoWorkAsync().GetAwaiter().GetResult();
+				}
 			}
 		}
 

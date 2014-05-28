@@ -26,7 +26,7 @@ namespace AzureService.Configuration
 
 				if (null == config)
 				{
-					var options = getDefaultConfigurationOptions();
+					var options = await getDefaultConfigurationOptionsAsync();
 					string optionsString = JsonConvert.SerializeObject(options);
 					await cache.StringSetAsync("configuration", optionsString);
 					return options;
@@ -35,16 +35,9 @@ namespace AzureService.Configuration
 				return JsonConvert.DeserializeObject<ConfigurationOptions>(config);
 			}
 		}
-
-		private ConfigurationOptions getDefaultConfigurationOptions()
+		private async Task<ConfigurationOptions> getDefaultConfigurationOptionsAsync()
 		{
-			return new ConfigurationOptions(
-				storageConnectionString: "UseDevelopmentStorage=true;",
-				sourceBlobContainerName: "sourcefiles",
-				destinationBlobContainerName: "destinationfiles",
-				processingQueueName: "processing",
-				processingTaskTableName: "processing"
-				);
+			return await new DummyAppConfiguration().GetApplicationConfigurationAsync();
 		}
 	}
 }

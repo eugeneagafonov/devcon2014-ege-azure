@@ -21,23 +21,23 @@ namespace AzureService.Core.TaskService
 
 		public async Task SaveTaskAsync(ProcessingTask task)
 		{
-			if(null == task) throw new ArgumentNullException("task");
+			if (null == task) throw new ArgumentNullException("task");
 
 			ConfigurationOptions options = await _configuration.GetApplicationConfigurationAsync();
 			CloudTable table = await getTableReferenceAsync(options);
-			var operation = TableOperation.InsertOrReplace(new ProcessingTaskEntity(task));
+			TableOperation operation = TableOperation.InsertOrReplace(new ProcessingTaskEntity(task));
 			await table.ExecuteAsync(operation);
 		}
 
 		public async Task<ProcessingTask> GetTaskAsync(string taskId)
 		{
-			if(string.IsNullOrWhiteSpace(taskId)) throw new ArgumentNullException("taskId");
+			if (string.IsNullOrWhiteSpace(taskId)) throw new ArgumentNullException("taskId");
 
 			ConfigurationOptions options = await _configuration.GetApplicationConfigurationAsync();
 			CloudTable table = await getTableReferenceAsync(options);
 
 			// добавить информацию о пользователе
-			var entity = table.CreateQuery<ProcessingTaskEntity>()
+			ProcessingTaskEntity entity = table.CreateQuery<ProcessingTaskEntity>()
 				.Where(t => t.RowKey == taskId)
 				.SingleOrDefault();
 
