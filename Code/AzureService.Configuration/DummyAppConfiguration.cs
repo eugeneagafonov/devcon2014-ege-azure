@@ -9,8 +9,8 @@ namespace AzureService.Configuration
 		{
 			return new ConfigurationOptions(
 				storageConnectionString:	"UseDevelopmentStorage=true;",
-				sourceBlobContainerName: "sourceFiles", 
-				destinationBlobContainerName: "destinationFiles",
+				sourceBlobContainerName: "sourcefiles", // имя контейнера должно быть в нижнем регистре!!
+				destinationBlobContainerName: "destinationfiles", // имя контейнера должно быть в нижнем регистре!!
 				processingQueueName: "processing",
 				processingTaskTableName:	"processing"
 				);

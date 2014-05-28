@@ -40,8 +40,8 @@ namespace AzureService.Configuration
 		{
 			return new ConfigurationOptions(
 				storageConnectionString: "UseDevelopmentStorage=true;",
-				sourceBlobContainerName: "sourceFiles",
-				destinationBlobContainerName: "destinationFiles",
+				sourceBlobContainerName: "sourcefiles",
+				destinationBlobContainerName: "destinationfiles",
 				processingQueueName: "processing",
 				processingTaskTableName: "processing"
 				);
