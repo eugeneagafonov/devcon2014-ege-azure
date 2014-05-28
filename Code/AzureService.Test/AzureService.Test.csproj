@@ -93,6 +93,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\AzureService.Component\AzureService.Component.csproj">
+      <Project>{F50A8184-3CE3-4584-97E6-123CCA0C052D}</Project>
+      <Name>AzureService.Component</Name>
+    </ProjectReference>
     <ProjectReference Include="..\AzureService.Configuration\AzureService.Configuration.csproj">
       <Project>{5eff39e0-2934-446d-b98d-d64c8537af76}</Project>
       <Name>AzureService.Configuration</Name>

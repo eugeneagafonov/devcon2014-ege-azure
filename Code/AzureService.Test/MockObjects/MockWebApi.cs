@@ -8,8 +8,10 @@ using System.Web.Http;
 using System.Web.Http.Dependencies;
 using Autofac;
 using Autofac.Integration.WebApi;
+using AzureService.Component;
 using AzureService.Configuration;
 using AzureService.Core.Configuration;
+using AzureService.Core.FileProcessing;
 using AzureService.Core.FileProcessingWorker;
 using AzureService.Core.FileStorageService;
 using AzureService.Core.QueueService;
@@ -22,6 +24,24 @@ namespace AzureService.Test.MockObjects
 {
 	public static class MockWebApi
 	{
+		public static ILifetimeAwareComponent<IFileProcessingWorker> CreateFileProcessingWorker(
+	IReadOnlyDictionary<string, IFileProcessor> converters)
+		{
+			ContainerBuilder builder = createBuilderAndRegisterServices();
+
+			foreach (var entry in converters)
+			{
+				var service = entry.Value;
+				var key = entry.Key;
+				builder.Register(c => service).Keyed<IFileProcessor>(key);
+			}
+
+			IContainer container = builder.Build();
+			var component = new AutofacLifetimeAwareComponent<IFileProcessingWorker>(container);
+
+			return component;
+		}
+
 		public static TestServer CreateServer()
 		{
 			return TestServer.Create(app => app.UseWebApi(createConfig()));
