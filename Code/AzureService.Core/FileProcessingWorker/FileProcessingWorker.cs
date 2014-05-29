@@ -60,6 +60,7 @@ namespace AzureService.Core.FileProcessingWorker
 
 			task.DestinationFile = destinationFile;
 			task.Status = TaskStatus.Success;
+			task.Message = "Task Processed Succesfully";
 
 			await _taskService.SaveTaskAsync(task);
 
