@@ -30,8 +30,8 @@ namespace AzureService.Test.MockObjects
 		public static ILifetimeAwareComponent<IFileProcessingWorker> CreateFileProcessingWorker(
 	IReadOnlyDictionary<string, IFileProcessor> converters)
 		{
-			ContainerBuilder builder = createBuilderAndRegisterServices();
-			//ContainerBuilder builder = createBuilderAndRegisterMockServices();
+			//ContainerBuilder builder = createBuilderAndRegisterServices();
+			ContainerBuilder builder = createBuilderAndRegisterMockServices();
 
 			foreach (var entry in converters)
 			{
@@ -68,8 +68,8 @@ namespace AzureService.Test.MockObjects
 
 		private static IDependencyResolver assembleWebApiComponents(Assembly webApiAssembly)
 		{
-			ContainerBuilder builder = createBuilderAndRegisterServices();
-			//ContainerBuilder builder = createBuilderAndRegisterMockServices();
+			//ContainerBuilder builder = createBuilderAndRegisterServices();
+			ContainerBuilder builder = createBuilderAndRegisterMockServices();
 
 			builder.RegisterApiControllers(webApiAssembly);
 			IContainer container = builder.Build();

@@ -42,7 +42,8 @@ namespace AzureService.Web
 			string configurationConnectionString = 
 				ConfigurationManager.ConnectionStrings["redisConnectionString"].ConnectionString;
 			
-			config.DependencyResolver = AppComposition.AssembleWebApiComponents(typeof(Startup).Assembly,
+			config.DependencyResolver = 
+				AppComposition.AssembleWebApiComponents(typeof(Startup).Assembly,
 				configurationConnectionString);
 
 			return config;

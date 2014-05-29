@@ -79,7 +79,8 @@ namespace AzureService.Web.WebAPI
 			FileMetadata fileMetadata = null;
 			using (Stream requestStream = await filePart.ReadAsStreamAsync())
 			{
-				fileMetadata = await _fileStorageService.SaveSourceFileStreamAsync(requestStream, contentType);
+				fileMetadata = await _fileStorageService
+					.SaveSourceFileStreamAsync(requestStream, contentType);
 			}
 
 			task = new ProcessingTask
